@@ -1,0 +1,60 @@
+.weather-app {
+    padding: 20px;
+
+    .weather-app_current-weather-description,
+    .weather-app_forecast-weather-description {
+        text-transform: capitalize;
+    }
+
+    .weather-app_forecast-card,
+    .weather-app_current-weather-card {
+        margin-top: 20px;
+    }
+
+    .weather-app_current-weather {
+        .weather-app_current-weather-time {
+            margin-bottom: 5px;
+        }
+
+        .weather-app_current-weather-temp-min-max {
+            margin-bottom: 5px;
+        }
+
+        .weather-app_current-weather-temp {
+            font-size: 60px;
+        }
+    }
+
+    .weather-app_forecast {
+        .weather-app_forecast-container {
+            margin-bottom: 10px;
+        }
+
+        .weather-app_forecast-date {
+            font-size: larger;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #D6DADC;
+            margin-bottom: 15px;
+        }
+
+        .weather-app_forecast-day {
+            display: flex;
+            flex-flow: row nowrap;
+
+            .weather-app_forecast-day--hourly-forecast {
+                width: calc(100% /8);
+                margin: 10px;
+                border-right: 1px solid #D6DADC;
+
+                &:last-of-type {
+                    border-right: 0;
+                }
+
+                .weather-app_forecast-weather-icon {
+                    height: 75px;
+                    width: 75px;
+                }
+            }
+        }
+    }
+}
