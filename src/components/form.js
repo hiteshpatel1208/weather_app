@@ -4,13 +4,14 @@ import { Button, Form, Label, Input, Col, FormGroup, FormFeedback, Card, CardBod
 export default function ZipInputForm(props) {
 
     const [zip, setZip] = useState('');
+    const [unit, setUnit] = useState('');
     const [validZip, setValidZip] = useState();
     const [inValidZip, setInvalidZip] = useState();
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
         if (validZip) {
-            props.formSubmit(zip);
+            props.formSubmit(zip, unit);
         }
     };
 
@@ -49,6 +50,29 @@ export default function ZipInputForm(props) {
                                 maxLength={5}
                             />
                             <FormFeedback invalid>Please enter valid zipcode.</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for='unit'>Select Unit: </Label>
+                            <Input style={{position: 'relative', marginInlineStart: 10, marginInlineEnd: 10}}
+                                type='radio'
+                                name='unit'
+                                value='metric'
+                                onChange={(e) => {
+                                    setUnit(e.target.value);
+                                }}
+                                required
+                            />
+                            <Label>Metric</Label>
+                            <Input style={{position: 'relative', marginInlineStart: 10, marginInlineEnd: 10}}
+                                type='radio'
+                                name='unit'
+                                value='imperial'
+                                onChange={(e) => {
+                                    setUnit(e.target.value);
+                                }}
+                                required
+                            />
+                            <Label>Imperial</Label>
                         </FormGroup>
                         <Button type='submit'>Check Weather</Button>
                     </Form>

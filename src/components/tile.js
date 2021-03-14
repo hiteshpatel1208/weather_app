@@ -3,7 +3,9 @@ import { Card, CardTitle, CardBody, Col } from 'reactstrap';
 
 export default function Tile(props) {
 
-    const { weather, forecast } = props;
+    const { weather, forecast, unit } = props;
+
+    const tempUnit = unit === 'imperial' ? 'F' : 'C';
 
     const normalizeForecast = () => {
         forecast.list.forEach(record => {
@@ -47,14 +49,14 @@ export default function Tile(props) {
                                 {`${new Date().toLocaleString()}`}
                             </div>
                             <div className='weather-app_current-weather-temp-min-max'>
-                                {`Day ${Math.ceil(weather.main.temp_max)}`}&deg;F &uarr; &#x25CF; {`Night ${Math.ceil(weather.main.temp_min)}`}&deg;F &darr;
+                                Day {Math.ceil(weather.main.temp_max)}&deg;{tempUnit} &uarr; &bull; Night {Math.ceil(weather.main.temp_min)}&deg;{tempUnit} &darr;
                             </div>
                             <div className='weather-app_current-weather-temp'>
                                 <img height={100} width={100} src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`} alt="weather_icon" />
-                                {`${Math.ceil(weather.main.temp)}`}&deg;F
+                                {Math.ceil(weather.main.temp)}&deg;{tempUnit}
                             </div>
                             <div className="weather-app_current-weather-description">
-                                Feels like {Math.ceil(weather.main.feels_like)}&deg;F. {weather.weather[0].description}
+                                Feels like {Math.ceil(weather.main.feels_like)}&deg;{tempUnit}. {weather.weather[0].description}
                             </div>
                         </div>
                     </CardBody>
@@ -70,38 +72,34 @@ export default function Tile(props) {
                             {
                                 normalizeForecast().map((day) => {
                                     return (
-                                        <>
-                                            <div className='weather-app_forecast-container' key={day}>
-                                                <div className='weather-app_forecast-date'>
-                                                    {day.date}
-                                                </div>
-                                                <div className='weather-app_forecast-day'>
-                                                    {
-                                                        day.weather.map(el => {
-                                                            return (
-                                                                <>
-                                                                    <div className='weather-app_forecast-day--hourly-forecast'>
-                                                                        {`${getTime(el.dt_txt)}`}
-                                                                        <div className='weather-app_forecast-weather-icon'>
-                                                                            <img height={75} width={75} src={`http://openweathermap.org/img/wn/${el.weather[0].icon}.png`} alt="weather_icon" />
-                                                                        </div>
-                                                                        <div className='weather-app_forecast-weather-description'>
-                                                                            {`${el.weather[0].description}`}
-                                                                        </div>
-                                                                        <div className=''>
-                                                                            {Math.ceil(el.main.temp_max)}&deg;F / {Math.ceil(el.main.temp_min)}&deg;F
-                                                                        </div>
-                                                                        <div className=''>
-                                                                            Precp: {Math.ceil(el.pop * 100)}%
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
+                                        <div className='weather-app_forecast-container' key={day.date}>
+                                            <div className='weather-app_forecast-date'>
+                                                {day.date}
                                             </div>
-                                        </>
+                                            <div className='weather-app_forecast-day'>
+                                                {
+                                                    day.weather.map(el => {
+                                                        return (
+                                                            <div className='weather-app_forecast-day--hourly-forecast' key={el.dt_txt}>
+                                                                {getTime(el.dt_txt)}
+                                                                <div className='weather-app_forecast-weather-icon'>
+                                                                    <img height={75} width={75} src={`http://openweathermap.org/img/wn/${el.weather[0].icon}.png`} alt="weather_icon" />
+                                                                </div>
+                                                                <div className='weather-app_forecast-weather-description'>
+                                                                    {el.weather[0].description}
+                                                                </div>
+                                                                <div className=''>
+                                                                    {Math.ceil(el.main.temp_max)}&deg;{tempUnit} / {Math.ceil(el.main.temp_min)}&deg;{tempUnit}
+                                                                </div>
+                                                                <div className=''>
+                                                                    Precp: {Math.ceil(el.pop * 100)}%
+                                                                        </div>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
                                     );
                                 })
                             }
