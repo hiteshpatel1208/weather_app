@@ -1,3 +1,7 @@
+$desktop: 1024px;
+$tablet: 780px;
+$mobile: 425px;
+
 .weather-app {
     padding: 20px;
 
@@ -93,54 +97,68 @@
         }
     }
 
-    .weather-app__current-weather {
-        .weather-app__current-weather-time {
-            margin-bottom: 5px;
+    .weather-app__weather-card {
+        padding: 20px;
+        border: 1px solid #D6DADC;
+        border-radius: 10px;
+
+        .weather-app__weather-card_title {
+            font-size: 30px;
         }
 
-        .weather-app__current-weather-temp-min-max {
-            margin-bottom: 5px;
-        }
-
-        .weather-app__current-weather-temp {
-            font-size: 35px;
-        }
-    }
-
-    .weather-app__forecast {
-        .weather-app__forecast-container {
-            margin-bottom: 10px;
-        }
-
-        .weather-app__forecast-date {
-            font-size: larger;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #D6DADC;
-            margin-bottom: 15px;
-        }
-
-        .weather-app__forecast-day {
+        .weather-app__weather-card--current {
             display: flex;
             flex-flow: row wrap;
-            text-align: center;
 
-            .weather-app__forecast-day--hourly-forecast {
-                width: calc(100% /8);
-                padding: 10px;
+            .weather-app__weather-card__info-block {
+                flex: 4;
+            }
+
+            .weather-app__weather-card__present-day-forecast {
+                display: inherit;
+                flex: 8;
+                justify-content: flex-start;
+            }
+
+            .weather-app__present-day--hourly-forecast {
+                width: calc(100%/7);
+                align-self: flex-end;
+                text-align: center;
                 border-right: 1px solid #D6DADC;
 
                 &:last-of-type {
-                    border-right: 0;
+                    border-right: none;
                 }
             }
+        }
 
-            .weather-app__forecast-temp-min-max {
-                font-size: 10px;
+        .weather-app__weather-card--forecast {
+            .weather-app__forecast-container {
+                margin-top: 10px;
             }
-            
-            .weather-app__forecast-weather-pop {
-                font-size: 10px;
+
+            .weather-app__forecast-date {
+                font-size: 25px;
+                padding-bottom: 5px;
+                border-bottom: 1px solid #D6DADC;
+                margin-bottom: 15px;
+            }
+
+            .weather-app__forecast-day {
+                display: flex;
+                flex-flow: row wrap;
+            }
+
+            .weather-app__forecast-day--hourly-forecast {
+                min-width: calc(100%/8);
+                text-align: center;
+                border-right: 1px solid #D6DADC;
+
+                &:last-of-type {
+                    border-right: none;
+                }
             }
         }
     }
+
 }

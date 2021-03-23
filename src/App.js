@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ZipInputForm from "./components/Form";
-import Current from "./components/Current";
-import './App.scss';
 import { Col, Container, Row } from 'reactstrap';
-import Forecast from './components/Forecast';
 import Unit from './components/Unit';
+import Weather from './components/Weather';
+import './App.scss';
 
 function App() {
 
@@ -12,6 +11,8 @@ function App() {
 	const [curWeather, setCurWeather] = useState({ cod: '404' });
 	const [forecastWeather, setForecastWeather] = useState({ cod: '404' });
 	const [unit, setUnit] = useState('imperial');
+	const [city, setCity] = useState('');
+	const [country, setCountry] = useState('');
 
 	const apiKey = 'fa56bfa56d667c9243a012b42283ad11';
 	const isMounted = useRef(false);
@@ -22,14 +23,35 @@ function App() {
 		
 		if(isMounted.current) {
 			fetch(currentWeatherUrl)
-			.then(res => res.json())
-			.then(res => setCurWeather(res))
-			.catch(err => console.log(err));
+				.then(res => res.json())
+				.then(res => {
+					setCity(res.name);
+					setCountry(res.sys.country);
+					setCurWeather(res);
+				})
+				.catch(err => console.log(err));
 			
 			fetch(forecastWeatherUrl)
-			.then(res => res.json())
-			.then(res => setForecastWeather(res))
-			.catch(err => console.log(err));
+				.then(res => res.json())
+				.then(res => {
+					res.list.forEach(record => {
+						return record.date = new Date(`${record.dt_txt}`).toLocaleDateString();
+					});
+					const groupedForecastByDate = res.list.reduce((rv, obj) => {
+						(rv[obj['date']] = rv[obj['date']] || []).push(obj);
+						return rv
+					}, {});
+					console.log(groupedForecastByDate);
+					const hourlyWhether = [];
+					for (const [k, v] of Object.entries(groupedForecastByDate)) {
+						hourlyWhether.push({
+							'date': k,
+							'weather': v
+						});
+					}
+					setForecastWeather(hourlyWhether);
+				})
+				.catch(err => console.log(err));
 			
 		} else {
 			isMounted.current = true;
@@ -57,14 +79,9 @@ function App() {
 					</Col>
 				</Row>
 				<Row>
-					<Col md={4}>
-						{curWeather.cod !== '404' && (
-							<Current weather={curWeather} unit={unit} />
-						)}
-					</Col>
-					<Col md={8}>
-						{forecastWeather.cod !== '404' && (
-							<Forecast weather={forecastWeather} unit={unit} />
+					<Col xs={12}>
+						{curWeather.cod!== '404' && forecastWeather.cod !== '404' && (
+							<Weather current={curWeather} foreCast={forecastWeather} city={city} country={country} unit={unit} />
 						)}
 					</Col>
 				</Row>
