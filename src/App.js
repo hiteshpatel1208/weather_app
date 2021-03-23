@@ -41,7 +41,6 @@ function App() {
 						(rv[obj['date']] = rv[obj['date']] || []).push(obj);
 						return rv
 					}, {});
-					console.log(groupedForecastByDate);
 					const hourlyWhether = [];
 					for (const [k, v] of Object.entries(groupedForecastByDate)) {
 						hourlyWhether.push({
@@ -71,10 +70,10 @@ function App() {
 		<div className='weather-app'>
 			<Container>
 				<Row>
-					<Col sm={11} xs={12}>
+					<Col sm={11} xs={9}>
 						<ZipInputForm formSubmit={submit} />
 					</Col>
-					<Col sm={1} xs={12} style={{textAlign: 'end'}}>
+					<Col sm={1} xs={3} style={{textAlign: 'end'}}>
 						<Unit unitSetter={unitSetter} />
 					</Col>
 				</Row>

@@ -5,6 +5,10 @@ $mobile: 425px;
 .weather-app {
     padding: 20px;
 
+    .weather-app__current-weather-time {
+        color: #f15d46;
+    }
+
     .weather-app__current-weather-description,
     .weather-app__forecast-weather-description {
         text-transform: capitalize;
@@ -12,6 +16,14 @@ $mobile: 425px;
 
     .weather-app__forecast-weather-description {
         font-size: 10px;
+    }
+
+    .weather-app__forecast-weather-pop {
+        font-size: 10px;
+    }
+
+    .weather-app__current-weather-temp {
+        font-size: 40px;
     }
 
     .weather-app__unit-switch {
@@ -108,27 +120,22 @@ $mobile: 425px;
 
         .weather-app__weather-card--current {
             display: flex;
-            flex-flow: row wrap;
 
             .weather-app__weather-card__info-block {
-                flex: 4;
+                flex: 5;
             }
 
             .weather-app__weather-card__present-day-forecast {
                 display: inherit;
-                flex: 8;
+                flex: 7;
                 justify-content: flex-start;
+                flex-flow: row wrap;
             }
 
             .weather-app__present-day--hourly-forecast {
-                width: calc(100%/7);
-                align-self: flex-end;
+                align-self: center;
                 text-align: center;
-                border-right: 1px solid #D6DADC;
-
-                &:last-of-type {
-                    border-right: none;
-                }
+                border-bottom: 1px solid #D6DADC;
             }
         }
 
@@ -150,15 +157,100 @@ $mobile: 425px;
             }
 
             .weather-app__forecast-day--hourly-forecast {
-                min-width: calc(100%/8);
                 text-align: center;
-                border-right: 1px solid #D6DADC;
-
-                &:last-of-type {
-                    border-right: none;
-                }
             }
         }
     }
 
+    @media screen and (min-width: 1024px) {
+        .weather-app__weather-card--current {
+            flex-flow: row nowrap;
+        }
+
+        .weather-app__present-day--hourly-forecast {
+            padding: 15px;
+            width: calc(100%/5);
+        }
+
+        .weather-app__forecast-day--hourly-forecast{
+            padding: 15px;
+            width: calc(100%/8);
+            border-right: 1px solid #D6DADC;
+
+            &:last-of-type {
+                border-right: none;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1023px) and (min-width: 768px) {
+        .weather-app__weather-card--current {
+            flex-flow: row nowrap;
+        }
+
+        .weather-app__present-day--hourly-forecast,
+        .weather-app__forecast-day--hourly-forecast{
+            width: 25%;
+        }
+
+        .weather-app__present-day--hourly-forecast {
+            padding: 10px;
+        }
+
+        .weather-app__forecast-day--hourly-forecast {
+            padding: 10px;
+            border-right:1px solid #D6DADC;
+
+            &:nth-child(4n+4) {
+                border-right:none;
+            }
+
+            &:nth-child(-n+4) {
+                border-bottom: 1px solid #D6DADC;
+            }
+        }
+
+    }
+
+    @media screen and (max-width: 425px) {
+        .weather-app__weather-card--current {
+            flex-flow: column nowrap;
+        }
+
+        .weather-app__weather-card__info-block {
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom:1px solid #D6DADC;
+        }
+
+        .weather-app__present-day--hourly-forecast,
+        .weather-app__forecast-day--hourly-forecast{
+            width: 50%;
+        }
+
+        .weather-app__present-day--hourly-forecast {
+            padding: 5px;
+        }
+
+        .weather-app__forecast-day--hourly-forecast {
+            padding: 5px;
+
+            &:nth-child(odd) {
+                border-bottom:1px solid #D6DADC;
+                border-right:1px solid #D6DADC;
+            }
+            
+            &:nth-child(2n+7) {
+                border-bottom: none;
+            }
+            
+            &:nth-child(even) {
+                border-bottom:1px solid #D6DADC;
+
+                &:last-child{
+                    border-bottom: none;
+                }
+            }
+        }
+    }
 }
