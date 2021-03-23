@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ZipInputForm from "./components/Form";
+import ZipInputForm from "./components/form";
 import { Col, Container, Row } from 'reactstrap';
 import Unit from './components/Unit';
 import Weather from './components/Weather';
